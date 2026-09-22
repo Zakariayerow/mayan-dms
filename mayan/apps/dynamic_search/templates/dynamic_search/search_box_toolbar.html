@@ -1,0 +1,29 @@
+{% load i18n %}
+
+{% load icons_tags %}
+{% load search_tags %}
+{% load smart_settings_tags %}
+
+{% icons_get_icon "mayan.apps.dynamic_search.icons.icon_search" as icon_search %}
+{% icons_get_icon "mayan.apps.dynamic_search.icons.icon_search_advanced" as icon_search_advanced %}
+{% search_get_default_search_model as default_search_model %}
+{% search_get_search_models as search_models %}
+{% smart_setting global_name="SEARCH_DISABLE_SIMPLE_SEARCH" as setting_disable_simple_search %}
+
+<form action="{% url 'search:search_results' %}" class="d-flex flex-nowrap gap-2 align-items-center" id="search-navbar-form" method="get" role="search">
+    <div class="input-group flex-nowrap">
+        <select class="form-select flex-grow-0 w-md-auto search-select-search-model" name="{% search_get_search_model_name_query_variable %}">
+            {% for search_model in search_models %}
+                <option {% if search_model.full_name == default_search_model.full_name %}selected{% endif %} value="{{ search_model.full_name }}">{{ search_model }}</option>
+            {% endfor %}
+        </select>
+
+        {% if setting_disable_simple_search == False %}
+            <input class="form-control" id="search-navbar-form-input-terms" name="{% search_get_query_parameter_any_field %}" placeholder="{% trans 'Search terms' %}" type="search" value="{{ search_terms|default:'' }}">
+
+            <button class="border-secondary btn btn-primary" title="{% trans 'Search' %}" type="submit">{{ icon_search }} <span class="d-none d-lg-inline">{% trans 'Search' %}</span></button>
+        {% endif %}
+    </div>
+
+    <a class="border-secondary btn btn-primary search-anchor-search-advanced text-nowrap" href="{% url 'search:search_advanced' %}?{% search_get_search_model_name_query_variable %}={{ default_search_model.full_name }}" id="search-button-search-advanced" title="{% trans 'Advanced search' %}">{{ icon_search_advanced }} <span class="d-none d-lg-inline">{% if setting_disable_simple_search == False %}{% trans 'Advanced' %}{% else %}{% trans 'Advanced search' %}{% endif %}</span></a>
+</form>

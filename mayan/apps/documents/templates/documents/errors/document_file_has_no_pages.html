@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% load icons_tags %}
+
+{% spaceless %}
+<div class="text-center" style="border: height: 100%;">
+    <div class="mayan-icon-4x" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans 'No file pages' %}">
+        {% icons_get_icon 'mayan.apps.documents.icons.icon_error_document_file_has_no_pages' %}
+    </div>
+</div>
+{% endspaceless %}

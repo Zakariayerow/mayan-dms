@@ -1,0 +1,88 @@
+{% load humanize %}
+{% load i18n %}
+
+{% load smart_settings_tags %}
+{% load templating_math_tags %}
+{% load templating_tags %}
+{% load views_tags %}
+
+{% smart_setting "APPEARANCE_PAGINATION_DROPDOWN_ENABLE" as setting_page_dropdown_enable %}
+{% smart_setting "APPEARANCE_PAGINATION_DROPDOWN_RANGE" as setting_page_dropdown_range %}
+{% smart_setting "APPEARANCE_PAGINATION_INPUT_ENABLE" as setting_page_input_enable %}
+{% smart_setting "APPEARANCE_ELIDED_PAGER_ON_EACH_SIDE" as setting_elided_pager_on_each_side %}
+{% smart_setting "APPEARANCE_ELIDED_PAGER_ON_ENDS" as setting_elided_pager_on_ends %}
+
+{% views_get_proper_elided_page_range paginator page_obj.number on_each_side=setting_elided_pager_on_each_side on_ends=setting_elided_pager_on_ends as page_range %}
+
+{% if page_obj %}
+    <nav aria-label="{% trans 'Pagination' %}">
+        <ul class="mb-0 pagination pagination-sm">
+                <li class="page-item">
+                    {% if page_obj.has_previous %}
+                        <a aria-label="{% trans 'Previous page' %}" class="page-link bg-secondary" href="{% views_get_paging_query_string page_number=page_obj.previous_page_number %}">&lsaquo;&lsaquo;</a>
+                    {% else %}
+                        <a aria-disabled="true" aria-label="{% trans 'Previous page' %}" class="page-link bg-secondary disabled" href="#" tabindex="-1">&lsaquo;&lsaquo;</a>
+                    {% endif %}
+                </li>
+
+                {% for page_number in page_range %}
+                    {% if page_number == paginator.ELLIPSIS %}
+                        <li class="page-item">
+                            <a class="page-link bg-secondary disabled" href="#">{{ paginator.ELLIPSIS }}</a>
+                        </li>
+                    {% else %}
+                        {% if page_number == page_obj.number %}
+                            <li class="active page-item">
+                                <a aria-current="page" class="bg-primary page-link pagination-disabled" href="#">{{ page_number|intcomma }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link bg-secondary" href="{% views_get_paging_query_string page_number=page_number %}">{{ page_number|intcomma }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a aria-label="{% trans 'Next page' %}" class="page-link bg-secondary" href="{% views_get_paging_query_string page_number=page_obj.next_page_number %}">&rsaquo;&rsaquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a aria-disabled="true" aria-label="{% trans 'Next page' %}" class="page-link bg-secondary disabled" href="#" tabindex="-1">&rsaquo;&rsaquo;</a>
+                    </li>
+                {% endif %}
+        </ul>
+    </nav>
+
+    
+    
+    
+    {% views_get_paging_query_string page_number='' as paging_query_string %}
+
+    {% if setting_page_input_enable %}
+        <div class="input-group input-group-sm w-auto">
+            
+            <input class="form-control appearance-pagination-page-select mayan-toolbar-page-input" data-page-number-maximum="{{ paginator.num_pages }}" data-paging-query-string="{{ paging_query_string }}" placeholder="{% trans 'Page' %}" size="3" title="{% trans 'Jump to page' %}" type="text">
+        </div>
+    {% endif %}
+
+    {% if setting_page_dropdown_enable %}
+        {% set setting_page_dropdown_range|math_floor_divide:2 as setting_page_dropdown_range_half %}
+        {% range page_obj.number|math_substract:setting_page_dropdown_range_half page_obj.number|add:setting_page_dropdown_range_half as page_select_range %}
+        <div class="input-group input-group-sm w-auto">
+            <select class="form-select appearance-pagination-page-select" data-page-number-maximum="{{ paginator.num_pages }}" data-paging-query-string="{{ paging_query_string }}">
+                {% for page_number in page_select_range %}
+                    {% if page_number > 0 and page_number <= paginator.num_pages %}
+                        {% if page_number == page_obj.number %}
+                            <option disabled="" selected="" value="{{ page_number }}">{{ page_number|intcomma }}</option>
+                        {% else %}
+                            <option value="{{ page_number }}">{{ page_number|intcomma }}</option>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+    {% endif %}
+{% endif %}
+

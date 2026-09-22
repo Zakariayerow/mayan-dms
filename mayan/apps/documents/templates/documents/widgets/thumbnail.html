@@ -1,0 +1,16 @@
+{% load converter_tags %}
+
+{% if instance %}
+
+    {% converter_get_object_image_data obj=instance transformation_instance_list=transformation_instance_list user=user as object_image_data %}
+
+    {% if 'app_image_error_image' in object_image_data %}
+        {% if object_image_data.app_image_error_image.template_name %}
+            {% include object_image_data.app_image_error_image.template_name %}
+        {% else %}
+            {% include "documents/invalid_document.html" %}
+        {% endif %}
+    {% else %}
+        {% converter_thumbnail_click_behavior_render behavior_name=thumbnail_click_behavior container_class=container_class disable_title_link=disable_title_link display_full_height=display_full_height display_height=display_height gallery_name=gallery_name image_alt=image_alt image_template_name='documents/widgets/thumbnail_image.html' instance=instance object_image_data=object_image_data %}
+    {% endif %}
+{% endif %}

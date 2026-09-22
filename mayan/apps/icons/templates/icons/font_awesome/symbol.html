@@ -1,0 +1,4 @@
+<span class="mayan-icon {{ html_data.class }}"{% if html_data.id %} id="{{ html_data.id }}"{% endif %}{% if html_data.style %} style="{{ html_data.style }}"{% endif %}>
+    {% if enable_shadow %}<i class="fa-fw {{ style }} fa-{{ symbol }} {{ css_classes }} fashadow"></i>{% endif %}
+    <i class="fa-fw {{ style }} fa-{{ symbol }} {{ css_classes }}"></i>
+</span>

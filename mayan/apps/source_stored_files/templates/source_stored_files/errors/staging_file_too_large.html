@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% load icons_tags %}
+
+{% spaceless %}
+<div class="text-center" style="border: height: 100%;">
+    <div class="mayan-icon-4x" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans 'File too large for preview' %}">
+        {% icons_get_icon 'mayan.apps.source_stored_files.icons.icon_error_staging_file_too_large' %}
+    </div>
+</div>
+{% endspaceless %}

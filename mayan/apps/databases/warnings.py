@@ -1,0 +1,2 @@
+class DatabaseWarning(UserWarning):
+    pass

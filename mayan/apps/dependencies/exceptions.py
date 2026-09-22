@@ -1,0 +1,2 @@
+class DependenciesException(Exception):
+    pass

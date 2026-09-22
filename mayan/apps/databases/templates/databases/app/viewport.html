@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% load databases_tags %}
+
+{% databases_check_sqlite as check_sqlite %}
+{% if check_sqlite %}
+    <div class="alert alert-dismissible alert-warning">
+        <button aria-label="{% trans 'Close' %}" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+        <p><strong>{% trans 'Warning' %}</strong> {{ check_sqlite }}</p>
+    </div>
+{% endif %}
+

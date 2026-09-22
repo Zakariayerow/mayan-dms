@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% load icons_tags %}
+
+{% spaceless %}
+<div class="text-center" style="border: height: 100%;">
+    <div class="mayan-icon-4x" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ details }}">
+        {% icons_get_icon 'mayan.apps.converter.icons.icon_error_broken_file' %}
+    </div>
+</div>
+{% endspaceless %}

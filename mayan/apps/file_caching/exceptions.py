@@ -1,0 +1,2 @@
+class FileCachingException(Exception):
+    pass

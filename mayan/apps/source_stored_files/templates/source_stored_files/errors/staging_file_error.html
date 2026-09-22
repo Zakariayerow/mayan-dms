@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% load icons_tags %}
+
+{% spaceless %}
+<div class="text-center">
+    <div class="mayan-icon-4x" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans 'Error generating preview' %}">
+        {% icons_get_icon 'mayan.apps.source_stored_files.icons.icon_error_staging_file' %}
+    </div>
+</div>
+{% endspaceless %}

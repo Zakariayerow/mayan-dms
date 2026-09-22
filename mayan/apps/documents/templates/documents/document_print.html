@@ -1,0 +1,23 @@
+{% extends 'appearance/base_plain.html' %}
+
+{% load i18n %}
+
+{% load static %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+    {% if page_count %}
+        <iframe
+            class="document-print-frame" id="document-print-frame"
+            src="{{ print_pdf_url }}"
+            title="{% trans 'Document print preview' %}"
+        ></iframe>
+
+        <script src="{% static 'documents/js/document_print.js' %}"></script>
+    {% else %}
+        <p class="document-print-message">
+            {% trans 'There are no pages to print.' %}
+        </p>
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% load static %}
+
+{% load smart_settings_tags %}
+
+<link href="{% static 'documents/css/documents.css' %}" media="screen" rel="stylesheet" type="text/css" />
+
+{% smart_setting global_name='DOCUMENTS_LIST_THUMBNAIL_WIDTH' as thumbnail_width %}
+
+<style>
+    :root {
+        --mayan-document-thumbnail-width: {{ thumbnail_width }}px;
+     }
+</style>

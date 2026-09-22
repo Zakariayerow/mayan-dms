@@ -1,0 +1,10 @@
+{% load navigation_tags %}
+
+{% navigation_resolve_menus names='object,secondary' sort_results=True as action_menus_link_results %}
+{% if action_menus_link_results %}
+    <div id="menu-actions">
+        <div class="btn-group">
+            {% include 'navigation/actions_dropdown.html' %}
+        </div>
+    </div>
+{% endif %}

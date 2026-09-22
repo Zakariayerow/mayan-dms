@@ -1,0 +1,9 @@
+<div class="card card-body bg-body-secondary border-0">
+    {% if content %}
+        <p>{{ content }}</p>
+    {% endif %}
+
+    {% for paragraph in paragraphs %}
+        <p>{{ paragraph }}</p>
+    {% endfor %}
+</div>

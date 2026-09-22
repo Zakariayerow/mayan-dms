@@ -1,0 +1,104 @@
+{% load i18n %}
+
+{% load widget_tweaks %}
+
+{% load appearance_tags %}
+{% load templating_tags %}
+
+{% for asset in form.media.render_css %}
+    {{ asset|safe }}
+{% endfor %}
+
+{% for group, errors in form.errors.items %}
+    {% for error in errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+
+
+
+
+{% if form_display_mode_table %}
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+    <tr>
+    {% for field in form.visible_fields %}
+        <td title="{% if field.errors %}{% for error in field.errors %}{{ error }}{% if not forloop.last %} | {% endif %}{% endfor %}{% else %}{{ field.help_text }}{% endif %}">
+                {% if field|widget_type == 'radioselect' %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    <div class="btn-group" role="group">
+                        {% for option in field %}
+                            <input autocomplete="off" class="btn-check" id="{{ option.id_for_label }}" name="{{ option.data.name }}" type="radio" value="{{ option.data.value }}" {% if option.data.selected %}checked{% endif %}>
+                            <label class="btn btn-secondary" for="{{ option.id_for_label }}">{{ option.data.label }}</label>
+                        {% endfor %}
+                    </div>
+                {% elif field|widget_type == 'checkboxinput' %}
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    {{ field|add_class:"form-check-input"|add_error_class:"is-invalid" }}
+                {% elif field|widget_type == 'select' %}
+                    
+                    
+                    
+                    {{ field|add_class:"form-select"|add_error_class:"is-invalid" }}
+                {% else %}
+                    {{ field|add_class:"form-control"|add_error_class:"is-invalid" }}
+                {% endif %}
+        </td>
+    {% endfor %}
+    </tr>
+{% else %}
+    {% for field in form.hidden_fields %}
+        {{ field }}
+    {% endfor %}
+
+    {% for fieldset in form.get_fieldsets %}
+        {% if form.get_fieldsets|length > 1 %}
+            <fieldset class="appearance-fieldset">
+        {% endif %}
+            {% if form.get_fieldsets|length > 1 and fieldset.0 %}<legend class="appearance-legend">{{ fieldset.0 }}</legend>{% endif %}
+
+            {% with form|appearance_form_get_visile_fields_map as field_map %}
+                {% for field_name in fieldset.1.fields %}
+                    {% with field_map|dict_get:field_name as field %}
+                        {% include 'appearance/partials/form/field.html' %}
+                    {% endwith %}
+                {% endfor %}
+            {% endwith %}
+
+        {% if form.get_fieldsets|length > 1 %}
+            </fieldset>
+        {% endif %}
+    {% empty %}
+        
+        {% for field in form.visible_fields %}
+            {% include 'appearance/partials/form/field.html' %}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+<script>
+    {% for script in form|appearance_get_form_media_js %}
+        $.getScript('{{ script }}');
+    {% endfor %}
+</script>

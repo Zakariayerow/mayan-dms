@@ -1,0 +1,23 @@
+{% load static %}
+
+<script src="{% static 'appearance_bootstrap/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+
+<script>
+    (function () {
+        'use strict';
+
+        function updateNavbarHeight() {
+            var navbar = document.querySelector('.navbar.fixed-top');
+
+            if (navbar) {
+                document.documentElement.style.setProperty(
+                    '--mayan-navbar-height', navbar.offsetHeight + 'px'
+                );
+            }
+        }
+
+        updateNavbarHeight();
+        window.addEventListener('load', updateNavbarHeight);
+        window.addEventListener('resize', updateNavbarHeight);
+    })();
+</script>

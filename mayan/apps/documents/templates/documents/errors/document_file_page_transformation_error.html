@@ -1,0 +1,11 @@
+{% load i18n %}
+
+{% load icons_tags %}
+
+{% spaceless %}
+<div class="text-center" style="border: height: 100%;">
+    <div class="mayan-icon-4x" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% trans 'Document file page transformation error' %}">
+        {% icons_get_icon 'mayan.apps.documents.icons.icon_error_document_file_page_transformation' %}
+    </div>
+</div>
+{% endspaceless %}

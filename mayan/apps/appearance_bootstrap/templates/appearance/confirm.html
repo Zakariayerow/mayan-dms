@@ -1,0 +1,15 @@
+{% extends 'appearance/base.html' %}
+
+{% load i18n %}
+
+{% block title %}{% include 'appearance/partials/title.html' with non_html_title=True %}{% endblock %}
+
+{% block content %}
+    <div class="modal position-static d-block h-auto">
+        <div class="modal-dialog">
+            <div class="modal-content shadow">
+                {% include 'appearance/partials/confirm_content.html' %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

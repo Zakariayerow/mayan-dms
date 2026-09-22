@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="templating-widget-code-container">
+    <button class="btn btn-primary btn-sm templating-widget-code-copy" title="{% translate 'Copy content to clipboard' %}" type="button">{% translate 'Copy' %}</button>
+
+    <pre aria-hidden="true" class="templating-widget-code-preview"><code class="language-django hljs templating-widget-code-preview-code"></code></pre>
+
+    <textarea class="appearance-overscroll-contain appearance-resize-persist form-control templating-widget-code" name="{{ widget.name }}" wrap="off"{% include "django/forms/widgets/attrs.html" %}>
+{% if widget.value %}{{ widget.value }}{% endif %}</textarea>
+</div>

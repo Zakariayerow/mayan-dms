@@ -1,0 +1,38 @@
+{% load i18n %}
+
+{% load icons_tags %}
+
+<div class="text-center">
+    <div class="mayan-icon-2x">
+        {% if no_results_icon %}
+            {{ no_results_icon.render }}
+        {% else %}
+            {% icons_get_icon 'mayan.apps.appearance.icons.icon_no_results' %}
+        {% endif %}
+    </div>
+
+    {% trans 'No results' as default_title %}
+    <h4 class="mayan-h4">{{ no_results_title|default:default_title }}</h4>
+    {% if no_results_text %}
+        <p class="small">{{ no_results_text }}</p>
+    {% endif %}
+
+    <div class="d-flex justify-content-center gap-2">
+        {% if no_results_main_link %}
+            {% with no_results_main_link as link %}
+            {% with 'btn btn-primary btn-sm' as link_classes %}
+            {% include 'navigation/generic_subnavigation.html' %}
+            {% endwith %}
+            {% endwith %}
+        {% endif %}
+
+        {% if no_results_secondary_links %}
+            {% for link in no_results_secondary_links %}
+                {% with 'btn btn-secondary btn-sm' as link_classes %}
+                    {% include 'navigation/generic_subnavigation.html' %}
+                {% endwith %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+

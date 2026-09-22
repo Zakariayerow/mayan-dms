@@ -1,0 +1,16 @@
+.card-item .card-body .label-tag {
+    white-space: normal;
+}
+
+.tag-container .badge {
+    margin-inline-end: 2px;
+}
+
+.label-tag a {
+    color: inherit;
+    text-decoration: none !important;
+}
+
+.label-tag {
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+}

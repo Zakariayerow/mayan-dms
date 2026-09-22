@@ -1,0 +1,70 @@
+{% load i18n %}
+
+<div class="input-group signature-captures-widget">
+    {% include 'django/forms/widgets/input.html'  %}
+
+    <div class="form-control">
+        <div id="signature-pad-wrapper" class="signature-pad-wrapper">
+            <div class="signature-pad-body">
+                <canvas class="w-100 h-100 d-block"></canvas>
+            </div>
+            <div class="signature-pad-footer">
+                <div class="description text-center text-small">{% trans 'Sign above' %}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    jQuery(document).ready(function() {
+        $('#id_data').hide();
+
+        const $fieldPointValues = $('.signature-captures-capture-data');
+        const $fieldSVG = $('.signature-captures-capture-svg');
+
+        const elementSignaturePadWrapper = document.getElementById('signature-pad-wrapper');
+        const elementSignaturePadCanvas = elementSignaturePadWrapper.querySelector('canvas');
+
+        const signaturePad = new SignaturePad(elementSignaturePadCanvas, {});
+
+        function doSignatureReload() {
+            if ($fieldPointValues.val()) {
+                let signaturePadPointValues = $fieldPointValues.val();
+                if (signaturePadPointValues) {
+                    signaturePad.fromData(
+                        JSON.parse(signaturePadPointValues)
+                    );
+                }
+            }
+        }
+
+        function doSignatureDownload() {
+            $fieldPointValues.val(
+                JSON.stringify(
+                    signaturePad.toData()
+                )
+            );
+
+            $fieldSVG.val(
+                signaturePad.toDataURL('image/svg+xml')
+            );
+        }
+
+        function resizeCanvas() {
+          let windowRatio =  Math.max(window.devicePixelRatio || 1, 1);
+
+          elementSignaturePadCanvas.width = elementSignaturePadCanvas.offsetWidth * windowRatio;
+          elementSignaturePadCanvas.height = elementSignaturePadCanvas.offsetHeight * windowRatio;
+          elementSignaturePadCanvas.getContext('2d').scale(windowRatio, windowRatio);
+          signaturePad.clear();
+          doSignatureReload();
+        }
+
+        signaturePad.addEventListener('endStroke', () => {
+            doSignatureDownload();
+        });
+        window.onresize = resizeCanvas;
+
+        resizeCanvas();
+    });
+</script>
